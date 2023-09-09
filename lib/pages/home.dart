@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:instaclone/fetch.dart';
 import 'package:instaclone/util/bubble_stories.dart';
 import 'package:instaclone/util/user_posts.dart';
