@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 class UserPosts extends StatelessWidget {
   final String name;
+  final String imageUrl;
+  final String caption;
 
-  UserPosts({required this.name});
+  UserPosts(
+      {required this.name, required this.imageUrl, required this.caption});
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +41,17 @@ class UserPosts extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          height: 400,
-          color: Colors.grey[300],
+        // Container(
+        //   height: 400,
+        //   color: Colors.grey[300],
+
+        // ),
+        Image.network(
+          imageUrl,
+          height: 300,
+          width: 500,
         ),
+
         const Padding(
           padding: EdgeInsets.all(16.0),
           child: Row(
@@ -88,11 +98,11 @@ class UserPosts extends StatelessWidget {
             style: const TextStyle(color: Colors.black),
             children: [
               TextSpan(
-                  text: name,
+                  text: "$name ",
                   style: const TextStyle(fontWeight: FontWeight.bold)),
-              const TextSpan(
-                  text:
-                      ' We suffer more in our imagination than in reality. believe you can and you halfway there.'),
+              TextSpan(
+                text: caption,
+              ),
             ],
           )),
         ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'package:instaclone/fetch.dart';
 import 'package:instaclone/util/bubble_stories.dart';
 import 'package:instaclone/util/user_posts.dart';
 
@@ -12,6 +14,7 @@ class UserHome extends StatelessWidget {
     'Gulshan',
     'Moin'
   ];
+
   UserHome({super.key});
 
   @override
@@ -51,13 +54,28 @@ class UserHome extends StatelessWidget {
           ),
           //posts
           Expanded(
-            child: ListView.builder(
-                itemCount: people.length,
-                itemBuilder: (context, index) {
-                  return UserPosts(
-                    name: people[index],
+            child: FutureBuilder<List<UserPosts>>(
+              future: fetchInstagramPosts(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  final posts = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: people.length,
+                    itemBuilder: (context, index) {
+                      final post = posts[index];
+                      return UserPosts(
+                          name: people[index],
+                          imageUrl: post.imageUrl,
+                          caption: post.caption);
+                    },
                   );
-                }),
+                }
+              },
+            ),
           )
         ],
       ),

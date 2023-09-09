@@ -1,10 +1,12 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:instaclone/fetch.dart';
 import 'package:instaclone/pages/account.dart';
 import 'package:instaclone/pages/home.dart';
 import 'package:instaclone/pages/reels.dart';
 import 'package:instaclone/pages/search.dart';
 import 'package:instaclone/pages/shop.dart';
+import 'package:instaclone/util/user_posts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,9 +22,18 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
+  late Future<List<UserPosts>> posts;
+
+  @override
+  void initState() {
+    super.initState();
+    posts = fetchInstagramPosts();
+  }
+
+
 
   final List<Widget> _children = [
-  UserHome(),
+    UserHome(),
     const UserSearch(),
     UserReels(),
     const UserShop(),
